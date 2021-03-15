@@ -1,5 +1,5 @@
+@echo off 
 REM This is a smaple wrapper for UpdateIP.bat
-
 
 set DIR=%~pd0
 
