@@ -16,6 +16,7 @@ REM set defaults
 SET IngressDescription=Robs Home IP
 SET Port=22
 SET RemoveOnly=0
+SET SG=
 
 :loop
 IF NOT "%1%"=="" (
@@ -25,6 +26,14 @@ IF NOT "%1%"=="" (
     )
     IF "%1%"=="-d" (
         SET IngressDescription=%~2
+        SHIFT
+    )
+    IF "%1%"=="--securitygroup" (
+        SET SG=~%2
+        SHIFT
+    )
+    IF "%1%"=="-sg" (
+        SET SG=%~2
         SHIFT
     )
     IF "%1%"=="--newdescription" (
@@ -57,6 +66,11 @@ if "%NewIngressDescription%"=="" (
     SET NewIngressDescription=%IngressDescription%
 )
 
+IF "%SG%"=="" (
+    ECHO "You must define a Security Group"
+    EXIT
+)
+
 REM if "%NewIngressDescription%"=="" GOTO set_new
 REM GOTO done
 REM :set_new
@@ -67,14 +81,14 @@ REM Clear any previous value
 set Old_AWS_IP=
 
 REM Find the IP address previously used from the security group
-for /f %%a in ('aws ec2 describe-security-groups --profile nta --output text --group-id sg-0c794359dc78016af --query "SecurityGroups[].IpPermissions[?ToPort==`%Port%`].IpRanges[][?Description=='%IngressDescription%'][CidrIp]"') do set Old_AWS_IP=%%a
+for /f %%a in ('aws ec2 describe-security-groups --profile nta --output text --group-id %SG% --query "SecurityGroups[].IpPermissions[?ToPort==`%Port%`].IpRanges[][?Description=='%IngressDescription%'][CidrIp]"') do set Old_AWS_IP=%%a
  
 if NOT "%Old_AWS_IP%"=="" (
     REM Remove the previous IP Address
-    aws ec2 revoke-security-group-ingress --profile nta --group-id sg-0c794359dc78016af --protocol tcp --port %Port% --cidr=%Old_AWS_IP%
+    aws ec2 revoke-security-group-ingress --profile nta --group-id %SG% --protocol tcp --port %Port% --cidr=%Old_AWS_IP%
 )
 
 if "%RemoveOnly%" EQU "0" (
     REM Add the  new IP Address
-    aws ec2 authorize-security-group-ingress --profile nta --group-id sg-0c794359dc78016af --ip-permissions IpProtocol=tcp,FromPort=%Port%,ToPort=%Port%,IpRanges=[{CidrIp=%PublicIP%/32,Description="%NewIngressDescription%"}]
+    aws ec2 authorize-security-group-ingress --profile nta --group-id %SG% --ip-permissions IpProtocol=tcp,FromPort=%Port%,ToPort=%Port%,IpRanges=[{CidrIp=%PublicIP%/32,Description="%NewIngressDescription%"}]
 )
