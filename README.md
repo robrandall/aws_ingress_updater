@@ -1,2 +1,2 @@
 # aws_ingress_updater
-Update AWS Security Group Ingres With Dynamic IP
+Update AWS Security Group Ingress With Dynamic IP
