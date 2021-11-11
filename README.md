@@ -23,7 +23,8 @@ UpdateIP.bat -p 443 -sg sg_xxxxxxxxxxxxxxxxx -r
 
 ## Required Arguments
 
--sg --securitygroup   AWS Security Group
+-sg --securitygroup   
+AWS Security Group
 
 ## Optional Arguments
 
