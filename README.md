@@ -30,11 +30,11 @@ UpdateIP.bat -p 443 -sg sg_xxxxxxxxxxxxxxxxx -r
 -d --description   
 Description (must match existing when removing). Defaults to %USERNAME%@%COMPUTERNAME%.
 
--n  --newdescription
+-n  --newdescription  
 Description to use for the new entry. Defaults to 'description' above.
 
--p --port
+-p --port  
 Port to open for the ingress. Defaults to 22.
 
--r --removeonly
+-r --removeonly  
 Flag to indicate that the entry is just to be removed, not updated. Update is the default.
