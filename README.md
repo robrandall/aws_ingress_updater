@@ -20,6 +20,11 @@ To remove
 UpdateIP.bat -p 443 -sg sg_xxxxxxxxxxxxxxxxx -r
 ```
 
+## Prerequisites
+
+- [AWS credentials setup.](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html)
+
+- [AWS CLI](https://aws.amazon.com/cli/)
 
 ## Required Arguments
 
