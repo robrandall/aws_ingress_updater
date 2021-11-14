@@ -1,5 +1,10 @@
 # AWS Ingress Updater
 
+## Prerequisites
+
+- [AWS credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html) set up.
+
+- [AWS CLI](https://aws.amazon.com/cli/) installed.
 ## Update AWS Security Group Ingress With Dynamic IP
 This Windows script will update an AWS Security Group to allow ingress for the host machine  by adding its IP address and port to the security group.
 
@@ -20,27 +25,16 @@ To remove
 UpdateIP.bat -p 443 -sg sg_xxxxxxxxxxxxxxxxx -r
 ```
 
-## Prerequisites
-
-- [AWS credentials setup.](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html)
-
-- [AWS CLI](https://aws.amazon.com/cli/)
-
 ## Required Arguments
 
--sg --securitygroup   
-AWS Security Group
+    -sg --securitygroup   AWS Security Group
 
 ## Optional Arguments
 
--d --description   
-Description (must match existing when removing). Defaults to %USERNAME%@%COMPUTERNAME%.
+    -d DESCRIPTION, --description DESCRIPTION      Description (must match existing when removing). Defaults to %USERNAME%@%COMPUTERNAME%.
 
--n  --newdescription  
-Description to use for the new entry. Defaults to 'description' above.
+    -n DESCRIPTION, --newdescription DESCRIPTION   Description to use for the new entry. Defaults to 'description' above.
 
--p --port  
-Port to open for the ingress. Defaults to 22.
+    -p PORT, --port PORT                           Port to open for the ingress. Defaults to 22.
 
--r --removeonly  
-Flag to indicate that the entry is just to be removed, not updated. Update is the default.
+    -r --removeonly                                Flag to indicate that the entry is just to be removed, not updated. Update is the default.
